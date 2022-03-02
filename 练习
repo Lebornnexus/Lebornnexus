@@ -1,0 +1,60 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+	//定义常量在main函数中进行
+	const int day = 7;
+	cout << "一周有" << day << "天" << endl;
+
+	//短整型
+	short a = 32769;
+    cout << a<< endl;
+
+	//sizeof测算占据字节数目
+	cout << sizeof(short) << endl;
+
+	//实型（浮点型）单精度float精确7位有效数字，双精度double精确15-16个有效数字
+	float b = 3.14f;//float后加上f表示其为单精度，否则系统默认其为双精度
+	cout << b << endl;
+	//float 4字节 double 8字节
+	double c = 3.1415926;//显示的最多为六位有效数字
+	cout << c << endl;
+
+	//科学计数法
+	float d = 3e-2;//e后代表10的次方
+	cout << d << endl;
+
+	//字符型
+	char ch = 'a';
+	cout << ch << endl;
+	//常见错误：1.创建字符型不能用“”必须使用‘’2.单引号内只能有一个字符
+
+	cout << (int)ch << endl;//(int)将字符型强制转换成整型以查看ASCI码 a-97 A-65
+
+	//转义字符 \n换行符号 \\输出反斜杠\  \t水平制表（用“ ”将其凑足八个位置）
+	//\t可以整齐的输出后面的字符
+	cout << "aaaaa\thelloworld"<< endl;
+	cout << "aaa\thelloworld" << endl;
+	cout << "a\thelloworld" << endl;
+	
+	//字符串：1.C语言型char a[]=“”2.string a=“”（调用文件string）
+	string e = "hello world!";
+	cout << e << endl;
+
+	//布尔类型 boll,bool类型非0均为真
+	bool flag1 = true;//true为1
+	bool flag2 = false;//false为0
+	cout << flag1 << flag2 << endl;
+	cout << "布尔类型所占空间为" << sizeof(flag1) << endl;
+
+	//输入数据套路统一
+	string str = "hello";
+	cout << "请给字符串str输入数据：" << endl;
+	cin >> str;
+	cout << "str为" << str << endl;
+
+	system("pause");
+	return 0;
+}
