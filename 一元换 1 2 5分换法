@@ -1,0 +1,25 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	int x,y,z,sum=0;
+	int m=100,m1,m2;
+	for(z=0;5*z<=m;z++)
+	{
+		m1=m-5*z;
+		for(y=0;2*y<=m1;y++)
+		{
+			m2=m1-2*y;
+			for(x=0;x<=m2;x++)
+			{
+				if(m2-x==0)
+				{
+					cout<<"1分"<<x<<"个"<<"\t"<<"2分"<<y<<"个"<<"\t"<<"5分"<<z<<"个"<<endl;
+					sum++;
+				}
+			}
+		}
+	}
+	cout<<"一共"<<sum<<"种换法"<<endl;
+	return 0;
+}
