@@ -1,0 +1,22 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+
+int main()
+{
+	int n, a, b, c, d;
+	printf("请输入一个五位数字：\n");
+	scanf("%d", &n);
+	a = n % 10;//个位
+	printf("个位:%d\n", a);
+	b = n / 10 % 10;//十位
+	printf("十位:%d\n", b);
+	c = n / 1000 % 10;//千位
+	printf("千位:%d\n", c);
+	d = n / 10000;//万位
+	printf("万位:%d\n", d);
+	if (a == d && b == c)
+		printf("%d是对称数\n", n);
+	else
+		printf("%d不是对称数\n", n);
+	return 0;
+}
