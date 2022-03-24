@@ -1,0 +1,328 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<iostream>
+#include<string>
+#include<string.h>
+int a[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+#define N 3
+using namespace std;
+class person {
+public :
+	void read()
+	{
+		cout << "\n\n\n请输入人员基本信息：" << endl;
+		cout << "身份证号："; cin >> id;
+		cout << "姓名："; cin >> name;
+		cout << "性别："; cin >> sex;
+		cout << "请输入出生日期：" << endl;
+		cin >> year >> month >> day;
+	}
+	void show()
+	{
+		cout << "身份证号："<< id << endl;
+		cout << "	姓名："<< name << endl;
+		cout << "	性别："<< sex << endl;
+		cout << "	出生日期：" << year << "年" << month << "月" << day << "日" << endl ;
+	}
+	int isleap();
+	int days();
+	void change()
+	{
+		int n,y=1,year1,month1,day1;
+		string x;
+		cout << "修改项目：\n1—身份证号\n2—姓名\n3—性别\n4—出生日期   ";
+			cout << "请选择修改信息项：" << endl;
+			cin >> n;
+			switch (n)
+			{
+			case 1:cout << "请输入修改之后身份证号：  "; cin >> x; id.swap(x); break;
+			case 2:cout << "请输入修改之后姓名：  "; cin >> x; name.swap(x); break;
+			case 3:cout << "请输入修改之后性别：  "; cin >> x; sex.swap(x); break;
+			case 4:cout << "请输入修改之后出生日期：  "; cin >> year1 >> month1 >> day1; year = year1; month = month1;day=day1; break;
+			default:cout << "Error!!!" << endl; break;
+			}
+			cout << "修改后信息为：" << endl;
+			show();
+	}
+	friend  int old( person &p1,person  &p2);
+protected:
+	string id, name, sex;
+	int year, month, day;
+};
+int person::isleap()
+{
+	return (year % 4 == 0 && year % 100 != 0 || year % 400 == 0);
+}
+int person::days()
+{
+	int n = 0, i;
+	for (i = 1; i < month; i++)
+		n = n + a[i];
+	n = n + day;
+	if (month > 2 && isleap()) n++;
+	return n;
+}
+	
+
+
+class  student :public person {
+public:
+	void scan()
+	{
+		read();
+		cout << "学号："; cin >> ID;
+		cout << "语文成绩："; cin >> chinese;
+		cout << "数学成绩："; cin >> math;
+		cout << "英语成绩："; cin >> english;
+	}
+	void show()
+	{
+		person::show();
+		cout << "  学号：" << ID << endl;
+		cout << "	语文成绩：" << chinese<<endl;
+		cout << "	数学成绩：" << math << endl;
+		cout << "	英语成绩：" << english << endl;
+	}
+	int getid()
+	{
+		return ID;
+	}
+	double aver()
+	{
+		double aver;
+		int sum = chinese + math + english;
+		aver = sum * 1.0 / 3;
+		return aver;
+	}
+	void change()
+	{
+		int n, y, year1, month1, day1, a, b, c;
+		string x;
+		int z;
+		cout << "是否修改信息？1—是    2—否" << endl;
+		cin >> y;
+		cout << "修改项目：\n1—身份证号\n2—姓名\n3—性别\n4—出生日期\n5—学号\n6—语文成绩\n7—数学成绩\n8—英语成绩\n   ";
+			cout << "请选择修改信息项：" << endl;
+			cin >> n;
+			switch (n)
+			{
+			case 1:cout << "请输入修改之后身份证号：  "; cin >> x; id.swap(x); break;
+			case 2:cout << "请输入修改之后姓名：  "; cin >> x; name.swap(x); break;
+			case 3:cout << "请输入修改之后性别：  "; cin >> x; sex.swap(x); break;
+			case 4:cout << "请输入修改之后出生日期：  "; cin >> year1 >> month1 >> day1; year = year1; month = month1; day = day1; break;
+			case 5:cout << "请输入修改之后学号：  "; cin >> z; ID=z; break;
+			case 6:cout << "请输入修改之后语文成绩：  "; cin >> a; chinese=a; break;
+			case 7:cout << "请输入修改之后数学成绩：  "; cin >> b; math=b; break;
+			case 8:cout << "请输入修改之后英语成绩：  "; cin >> c; english=c; break;
+			default:cout << "Error!!!" << endl; break;
+			}
+			cout << "修改后信息为：" << endl;
+			show();
+			aver();
+	}
+	int getyear() { return year; }
+	int getmonth() { return month; }
+	int getday() { return day; }
+	friend void rank1(student s[N]);
+	friend int old(student& p1, student& p2);
+
+private:
+	int chinese, math, english, ID;
+};
+void rank1(student s[N])
+{
+	student temp=s[0];
+	int i, j;
+	for (i = 0; i < N; i++)
+	{
+		for (j = i; j < N; j++)
+		{
+			if (s[i].aver() < s[j ].aver())
+			{
+				temp = s[i];
+				s[i] = s[j ];
+				s[j ] = temp;
+			}
+		}
+	}
+	cout << "平均分从大到小排列顺序为：" << endl;
+	for (i = 0; i < N; i++)
+	{
+		s[i].show();
+	}
+}
+
+class Date {
+public:
+	Date(int y, int m, int d)
+	{
+		year = y; month = m; day = d;
+	}
+private:
+	int year, month, day;
+};
+
+/*int old(student& p1, student& p2)
+{
+	int n = 0,total;
+	if (p1.year < p2.year || p1.year == p2.year && p1.month < p2.month || p1.year == p2.year && p1.month == p2.month && p1.day < p2.day)
+	{
+		cout << p1.name << "年纪较大" << endl;
+	}
+	else
+	{
+		cout << p1.name << "年纪较小" << endl;
+	}
+
+	int g = p1.year; int b = p1.month; int c = p1.day;
+	int ans = 0, k = 0;
+	for (k = 0; k < g; k++)
+	{
+		if ((k % 4 == 0) && (k % 100 != 0) || (k % 400 == 0))ans += 366;
+		else ans += 365;
+	}
+	if ((g % 4 == 0) && (g % 100 != 0) || (g % 400 == 0))a[2]++;
+	for (k = 1; k <= b; k++)
+	{
+		ans += a[k];
+	}
+	a[2] = 28;
+	ans += c;
+	total = ans;
+/*int ans = 0;
+	while (cc <= ff||aa<dd||bb<ee)
+	{
+		while (bb < ee||aa<dd)
+		{
+			while (aa < dd)
+			{
+				ans++;
+				if (aa % 4 == 0 && aa % 100 != 0 || aa % 400 == 0)
+					a[2]++;
+				else a[2] = 28;
+				if (cc < a[bb])
+				{
+					cc++;
+				}
+				else
+				{
+					if (bb < 12)
+					{
+						bb++;
+						cc = 1;
+					}
+					else
+					{
+						bb = 1;
+						aa++;
+						cc = 1;
+					}
+				 }
+			 }
+			ans++;
+				if (cc < a[bb])
+				{
+					cc++;
+				}
+				else
+				{
+					if (bb < ee)
+					{
+						bb++;
+						cc = 1;
+					}
+				 }
+		   }
+		ans++;
+			cc++;
+	}
+	return ans ;
+	return total;
+}*/
+int old(student & d1, student & d2)
+{
+	int n = 0, i, flag = 1;
+	if (d1.year < d2.year || d1.year == d2.year && d1.month < d2.month || d1.year == d2.year && d1.month == d2.month && d1.day < d2.day)
+	{
+		student t(d1);
+		d1 = d2; d2 = t; flag = -1;
+	}
+	if (d1.year < d2.year || d1.year == d2.year && d1.month < d2.month || d1.year == d2.year && d1.month == d2.month && d1.day < d2.day)
+	{
+		cout << d1.name << "年纪较大" << endl;
+	}
+	else
+	{
+		cout << d1.name << "年纪较小" << endl;
+	}
+	if (d1.year > d2.year)
+	{
+		n = 365 + d2.isleap() - d2.days() + d1.days() + (d1.year - d2.year - 1) * 365;
+		for (i = d2.year + 1; i < d1.year; i++)
+			n = n + (i % 4 == 0 && i % 100 != 0 || i % 400 == 0);
+	}
+	else if (d1.year == d2.year && d1.month > d2.month || d1.year == d2.year && d1.month == d2.month && d1.day >= d2.day)
+		n = d1.days() - d2.days();
+	return n ;
+}
+
+int main()
+{
+	int i = 0, n, m, y,p,q;
+	student p1, p2;
+	p1.scan();
+	p2.scan();
+	p1.show();
+	p2.show();
+	cout << "是否修改信息？1—是    2—否" << endl;
+	cin >> y;
+	if (y == 1)
+	{
+		p1.change();
+	}
+	else
+		system("pause");
+	cout << "这两个日期相差" << old(p1, p2) << "天" << endl;
+	system("pause");
+	student s[N];
+	for ( i = 0; i < N; i++)
+	{
+		s[i].scan();
+		s[i].show();
+		cout << "语数英三科平均成绩为：" << s[i].aver() << endl;
+		cout<<s[i].getyear();
+	}
+	cout << "是否修改信息？1—是    2—否" << endl;
+	cin >> m;
+	if (m == 1)
+	{
+		int id1;
+		cout << "请输入学生学号：" << endl;
+		cin >> id1;
+		for (int i = 0; i < N; i++)
+		{
+			if (s[i].getid()== id1)
+			{
+				s[i].change();
+				break;
+			}
+		}
+	}
+	cout << "输入出生日期相差两人的学号：" << endl;
+	cin >> p >>q;
+	student d1, d2;
+	for (int i = 0; i < N; i++)
+	{
+		if (s[i].getid() == p)
+		{
+	      d1=s[i];
+		}
+		else if (s[i].getid() == q)
+		{
+			d2 = s[i];
+		}
+		cout << "这两人出生日期相差" << old(d1, d2) << "天" << endl;
+	}
+	rank1(s);
+	system("pause");
+	return 0;
+}
